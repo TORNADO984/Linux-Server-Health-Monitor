@@ -14,6 +14,7 @@ import logging
 import re
 import shutil
 import subprocess
+from pathlib import Path
 
 from server_health.models.health import HealthStatus, ServiceInfo, ServiceMetrics
 
@@ -24,6 +25,14 @@ logger = logging.getLogger(__name__)
 _SAFE_SERVICE_NAME = re.compile(r"^[a-zA-Z0-9._-]{1,64}$")
 
 SYSTEMCTL_PATH = shutil.which("systemctl")
+
+
+def _is_systemd_running() -> bool:
+    """Check if systemctl exists and systemd is running as PID 1."""
+    if SYSTEMCTL_PATH is None:
+        return False
+    # Standard Linux test: /run/systemd/system is created only when systemd is init
+    return Path("/run/systemd/system").is_dir()
 
 
 def collect_services(service_names: list[str]) -> ServiceMetrics:
@@ -37,8 +46,8 @@ def collect_services(service_names: list[str]) -> ServiceMetrics:
     """
     logger.debug("Collecting service metrics for: %s", service_names)
 
-    if SYSTEMCTL_PATH is None:
-        logger.warning("systemctl not found; skipping service checks.")
+    if not _is_systemd_running():
+        logger.debug("systemd not available or not running; skipping service checks.")
         return ServiceMetrics(
             services=[],
             systemd_available=False,
@@ -116,6 +125,12 @@ def _run_systemctl(command: str, unit: str) -> str | None:
             timeout=5,
             check=False,
         )
+        if result.returncode != 0:
+            stderr = result.stderr.strip()
+            if "not-found" in stderr or "not loaded" in stderr:
+                return "not-found"
+            if "not been booted" in stderr:
+                return None
         return result.stdout.strip() or result.stderr.strip() or "unknown"
     except subprocess.TimeoutExpired:
         logger.warning("Timeout querying systemctl %s %s", command, unit)

@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 class TestServicesCollector:
     def test_returns_unknown_when_no_systemctl(self):
-        with patch("server_health.collectors.services.SYSTEMCTL_PATH", None):
+        with patch("server_health.collectors.services._is_systemd_running", return_value=False):
             from server_health.collectors.services import collect_services
 
             metrics = collect_services(["ssh", "docker"])
@@ -23,6 +23,7 @@ class TestServicesCollector:
             return None
 
         with (
+            patch("server_health.collectors.services._is_systemd_running", return_value=True),
             patch("server_health.collectors.services.SYSTEMCTL_PATH", "/bin/systemctl"),
             patch("server_health.collectors.services._run_systemctl", side_effect=mock_run),
         ):
@@ -39,6 +40,7 @@ class TestServicesCollector:
             return "not-found"
 
         with (
+            patch("server_health.collectors.services._is_systemd_running", return_value=True),
             patch("server_health.collectors.services.SYSTEMCTL_PATH", "/bin/systemctl"),
             patch("server_health.collectors.services._run_systemctl", side_effect=mock_run),
         ):
@@ -48,7 +50,10 @@ class TestServicesCollector:
             assert metrics.services == []
 
     def test_rejects_invalid_service_name(self):
-        with patch("server_health.collectors.services.SYSTEMCTL_PATH", "/bin/systemctl"):
+        with (
+            patch("server_health.collectors.services._is_systemd_running", return_value=True),
+            patch("server_health.collectors.services.SYSTEMCTL_PATH", "/bin/systemctl"),
+        ):
             from server_health.collectors.services import collect_services
 
             # Injection attempt containing command separator
@@ -64,6 +69,7 @@ class TestServicesCollector:
             return None
 
         with (
+            patch("server_health.collectors.services._is_systemd_running", return_value=True),
             patch("server_health.collectors.services.SYSTEMCTL_PATH", "/bin/systemctl"),
             patch("server_health.collectors.services._run_systemctl", side_effect=mock_run),
         ):
