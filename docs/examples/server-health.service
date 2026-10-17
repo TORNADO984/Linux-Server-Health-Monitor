@@ -1,0 +1,29 @@
+[Unit]
+Description=Linux Server Health Monitor - Periodic Health Check
+Documentation=https://github.com/yourusername/linux-server-health-monitor
+After=network.target
+
+[Service]
+Type=oneshot
+User=monitor
+Group=monitor
+
+# Run the health check and append JSON output to system log directory
+ExecStart=/usr/local/bin/server-health check --json
+StandardOutput=append:/var/log/server-health/report.jsonl
+StandardError=journal
+
+# Security Hardening Sandbox
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadOnlyPaths=/
+ReadWritePaths=/var/log/server-health
+
+# Resource Safeguards
+MemoryMax=128M
+CPUQuota=15%
+
+[Install]
+WantedBy=multi-user.target

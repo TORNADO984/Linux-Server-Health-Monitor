@@ -1,0 +1,37 @@
+# =============================================================================
+# Server Health Monitor - Docker Compose
+# =============================================================================
+# This compose file mounts host system paths to allow the container to
+# monitor the HOST machine rather than the isolated container itself.
+#
+# Usage:
+#   docker compose run --rm server-health          # Full check
+#   docker compose run --rm server-health check --json
+#   docker compose run --rm server-health cpu
+# =============================================================================
+
+version: "3.8"
+
+services:
+  server-health:
+    image: server-health-monitor:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /proc:/proc:ro
+      - /sys:/sys:ro
+      - /etc:/etc:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    network_mode: host
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      - SERVER_HEALTH_CPU_WARNING=70
+      - SERVER_HEALTH_CPU_CRITICAL=90
+      - SERVER_HEALTH_MEMORY_WARNING=75
+      - SERVER_HEALTH_MEMORY_CRITICAL=90
+      - SERVER_HEALTH_DISK_WARNING=80
+      - SERVER_HEALTH_DISK_CRITICAL=90
+    restart: "no"

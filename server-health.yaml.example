@@ -1,0 +1,30 @@
+# Server Health Monitor - Configuration Example
+# Save as server-health.yaml in your working directory or ~/.config/server-health/
+
+thresholds:
+  cpu_warning: 70
+  cpu_critical: 90
+  memory_warning: 75
+  memory_critical: 90
+  disk_warning: 80
+  disk_critical: 90
+  load_warning: 2.0
+  load_critical: 4.0
+
+top_processes: 5
+
+services:
+  - ssh
+  - sshd
+  - docker
+  - nginx
+  - apache2
+  - mysql
+  - postgresql
+  - redis
+  - fail2ban
+  - ufw
+  - cron
+  - rsyslog
+
+log_level: INFO
