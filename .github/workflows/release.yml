@@ -98,8 +98,8 @@ jobs:
           context: .
           push: false  # Set to true after configuring registry credentials
           tags: |
-            yourusername/server-health-monitor:latest
-            yourusername/server-health-monitor:${{ steps.version.outputs.VERSION }}
+            TORNADO984/server-health-monitor:latest
+            TORNADO984/server-health-monitor:${{ steps.version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

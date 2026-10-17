@@ -31,7 +31,7 @@ FROM python:3.12-slim AS runtime
 LABEL org.opencontainers.image.title="Server Health Monitor"
 LABEL org.opencontainers.image.description="Production-style Linux server health monitoring CLI"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.source="https://github.com/yourusername/linux-server-health-monitor"
+LABEL org.opencontainers.image.source="https://github.com/TORNADO984/Linux-Server-Health-Monitor"
 
 # Create a dedicated non-root user
 RUN groupadd --gid 1001 monitor \

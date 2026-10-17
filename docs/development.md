@@ -10,7 +10,7 @@
 
 ### 1. Clone & Set Up Virtualenv
 ```bash
-git clone https://github.com/yourusername/linux-server-health-monitor.git
+git clone https://github.com/TORNADO984/Linux-Server-Health-Monitor.git
 cd linux-server-health-monitor
 
 python3 -m venv .venv

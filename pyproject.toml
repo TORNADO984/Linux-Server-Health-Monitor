@@ -48,10 +48,10 @@ dev = [
 server-health = "server_health.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/linux-server-health-monitor"
-Repository = "https://github.com/yourusername/linux-server-health-monitor"
-Issues = "https://github.com/yourusername/linux-server-health-monitor/issues"
-Changelog = "https://github.com/yourusername/linux-server-health-monitor/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/TORNADO984/Linux-Server-Health-Monitor"
+Repository = "https://github.com/TORNADO984/Linux-Server-Health-Monitor"
+Issues = "https://github.com/TORNADO984/Linux-Server-Health-Monitor/issues"
+Changelog = "https://github.com/TORNADO984/Linux-Server-Health-Monitor/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/server_health"]

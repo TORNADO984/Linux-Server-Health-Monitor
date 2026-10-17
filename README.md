@@ -1,6 +1,6 @@
 # Linux Server Health Monitor
 
-[![CI](https://github.com/yourusername/linux-server-health-monitor/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/linux-server-health-monitor/actions/workflows/ci.yml)
+[![CI](https://github.com/TORNADO984/Linux-Server-Health-Monitor/actions/workflows/ci.yml/badge.svg)](https://github.com/TORNADO984/Linux-Server-Health-Monitor/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -180,19 +180,19 @@ The project adheres to a clean, modular architecture separating metric collectio
 [`pipx`](https://pypa.github.io/pipx/) installs the CLI into an isolated virtual environment while making the `server-health` command available globally:
 
 ```bash
-pipx install git+https://github.com/yourusername/linux-server-health-monitor.git
+pipx install git+https://github.com/TORNADO984/Linux-Server-Health-Monitor.git
 ```
 
 Or from a local checkout:
 ```bash
-git clone https://github.com/yourusername/linux-server-health-monitor.git
+git clone https://github.com/TORNADO984/Linux-Server-Health-Monitor.git
 cd linux-server-health-monitor
 pipx install .
 ```
 
 ### Standard pip Installation
 ```bash
-git clone https://github.com/yourusername/linux-server-health-monitor.git
+git clone https://github.com/TORNADO984/Linux-Server-Health-Monitor.git
 cd linux-server-health-monitor
 python3 -m venv .venv
 source .venv/bin/activate
